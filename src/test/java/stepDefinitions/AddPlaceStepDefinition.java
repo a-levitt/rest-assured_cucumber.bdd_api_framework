@@ -13,6 +13,7 @@ import resources.TestDataBuild;
 import resources.Utils;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static io.restassured.RestAssured.*;
 import static org.junit.Assert.*;
@@ -25,7 +26,7 @@ public class AddPlaceStepDefinition extends Utils {
     TestDataBuild data = new TestDataBuild();
 
     @Given("Add Place Payload")
-    public void add_place_payload() throws FileNotFoundException {
+    public void add_place_payload() throws IOException {
 
         res =
         given()
