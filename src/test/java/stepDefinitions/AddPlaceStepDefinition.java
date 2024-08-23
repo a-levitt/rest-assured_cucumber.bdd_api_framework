@@ -12,6 +12,8 @@ import io.restassured.specification.ResponseSpecification;
 import resources.TestDataBuild;
 import resources.Utils;
 
+import java.io.FileNotFoundException;
+
 import static io.restassured.RestAssured.*;
 import static org.junit.Assert.*;
 
@@ -23,30 +25,27 @@ public class AddPlaceStepDefinition extends Utils {
     TestDataBuild data = new TestDataBuild();
 
     @Given("Add Place Payload")
-    public void add_place_payload() {
+    public void add_place_payload() throws FileNotFoundException {
 
-
-
+        res =
+        given()
+            .spec(requestSpecification())
+            .body(data.addPlacePayload())
+        ;
+    }
+    @When("user calls {string} with Post http request")
+    public void user_calls_with_post_http_request(String string) {
         resspec = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType(ContentType.JSON)
                 .build()
         ;
-
-        res = given()
-                .spec(requestSpecification())
-                .body(data.addPlacePayload())
-        ;
-    }
-    @When("user calls {string} with Post http request")
-    public void user_calls_with_post_http_request(String string) {
-
         response =
         res.when()
             .post("/maps/api/place/add/json").
-        then().
-                spec(resspec)
-                .extract().response()
+        then()
+            .spec(resspec)
+            .extract().response()
         ;
     }
     @Then("the API call got success with status code {int}")
