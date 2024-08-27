@@ -1,8 +1,6 @@
 package stepDefinitions;
 
 import io.cucumber.java.en.*;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -12,7 +10,6 @@ import io.restassured.specification.ResponseSpecification;
 import resources.TestDataBuild;
 import resources.Utils;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static io.restassured.RestAssured.*;
@@ -25,13 +22,13 @@ public class AddPlaceStepDefinition extends Utils {
     Response response;
     TestDataBuild data = new TestDataBuild();
 
-    @Given("Add Place Payload")
-    public void add_place_payload() throws IOException {
+    @Given("Add Place Payload with {string} {string} {string}")
+    public void add_place_payload_with(String name, String language, String address) throws IOException {
 
         res =
         given()
             .spec(requestSpecification())
-            .body(data.addPlacePayload())
+            .body(data.addPlacePayload(name, language, address))
         ;
     }
     @When("user calls {string} with Post http request")
