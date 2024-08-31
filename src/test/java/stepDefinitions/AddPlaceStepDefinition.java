@@ -7,6 +7,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import resources.APIResources;
 import resources.TestDataBuild;
 import resources.Utils;
 
@@ -32,7 +33,9 @@ public class AddPlaceStepDefinition extends Utils {
         ;
     }
     @When("user calls {string} with Post http request")
-    public void user_calls_with_post_http_request(String string) {
+    public void user_calls_with_post_http_request(String resource) {
+        APIResources resourceAPI = APIResources.valueOf(resource);
+
         resspec = new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .expectContentType(ContentType.JSON)
@@ -40,7 +43,7 @@ public class AddPlaceStepDefinition extends Utils {
         ;
         response =
         res.when()
-            .post("/maps/api/place/add/json").
+            .post(resourceAPI.getResource()).
         then()
             .spec(resspec)
             .extract().response()
