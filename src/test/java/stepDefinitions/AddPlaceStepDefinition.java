@@ -57,16 +57,15 @@ public class AddPlaceStepDefinition extends Utils {
         assertEquals(getJsonPath(response, keyValue), expectedValue);
     }
     @Then("verify place_id created maps to {string} using {string}")
-    public void verify_place_id_created_maps_to_using(String string, String string2) throws IOException {
+    public void verify_place_id_created_maps_to_using(String expectedName, String resource) throws IOException {
         String place_id = getJsonPath(response, "place_id");
         res =
         given()
             .spec(requestSpecification())
             .queryParam("place_id", place_id)
         ;
+        user_calls_with_post_http_request(resource, "GET");
+        String actualName = getJsonPath(response, "name");
+        assertEquals(actualName, expectedName);
     }
 }
-
-// then()
-//            .spec(resspec)
-//            .extract().response()
