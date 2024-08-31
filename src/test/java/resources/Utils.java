@@ -11,20 +11,22 @@ import java.util.Properties;
 
 public class Utils {
 
-    RequestSpecification req;
+    public static RequestSpecification req;
 
     public RequestSpecification requestSpecification() throws IOException {
 
-        PrintStream log = new PrintStream(new FileOutputStream("logging.txt"));
+        if (req == null) {
+            PrintStream log = new PrintStream(new FileOutputStream("logging.txt"));
 
-        req = new RequestSpecBuilder()
-            .setBaseUri(getGlobalValue("baseUrl"))
-            .addQueryParam("key", "qaclick123")
-            .setContentType(ContentType.JSON)
-            .addFilter(RequestLoggingFilter.logRequestTo(log))
-            .addFilter(ResponseLoggingFilter.logResponseTo(log))
-            .build()
-        ;
+            req = new RequestSpecBuilder()
+                    .setBaseUri(getGlobalValue("baseUrl"))
+                    .addQueryParam("key", "qaclick123")
+                    .setContentType(ContentType.JSON)
+                    .addFilter(RequestLoggingFilter.logRequestTo(log))
+                    .addFilter(ResponseLoggingFilter.logResponseTo(log))
+                    .build()
+            ;
+        }
 
         return req;
     }

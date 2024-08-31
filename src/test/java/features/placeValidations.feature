@@ -10,5 +10,5 @@ Feature: Validating Place APIs
 Examples:
     | name         |  language   | address                   |
     |AAhouse       |  English    | World cross center        |
-#   |Home #1       |  Swedish    | Sweden, Malmo, Borg st.15 |
-#   |IronForge gym |  English-US | USA, TX, North Rocks, 24  |
+    |Home #1       |  Swedish    | Sweden, Malmo, Borg st.15 |
+    |IronForge gym |  English-US | USA, TX, North Rocks, 24  |
