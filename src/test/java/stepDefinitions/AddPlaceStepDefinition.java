@@ -32,8 +32,8 @@ public class AddPlaceStepDefinition extends Utils {
             .body(data.addPlacePayload(name, language, address))
         ;
     }
-    @When("user calls {string} with Post http request")
-    public void user_calls_with_post_http_request(String resource) {
+    @When("user calls {string} with {string} http request")
+    public void user_calls_with_post_http_request(String resource, String method) {
         APIResources resourceAPI = APIResources.valueOf(resource);
 
         resspec = new ResponseSpecBuilder()
@@ -41,13 +41,12 @@ public class AddPlaceStepDefinition extends Utils {
                 .expectContentType(ContentType.JSON)
                 .build()
         ;
-        response =
-        res.when()
-            .post(resourceAPI.getResource()).
-        then()
-            .spec(resspec)
-            .extract().response()
-        ;
+
+        if (method.equalsIgnoreCase("POST"))
+            response = res.when().post(resourceAPI.getResource());
+        else if (method.equalsIgnoreCase("GET"))
+            response = res.when().get(resourceAPI.getResource());
+
     }
     @Then("the API call got success with status code {int}")
     public void the_api_call_got_success_with_status_code(Integer int1) {
@@ -61,3 +60,7 @@ public class AddPlaceStepDefinition extends Utils {
     }
 
 }
+
+// then()
+//            .spec(resspec)
+//            .extract().response()
